@@ -1,0 +1,7 @@
+{
+    "download":[
+        "(*option*, *url*)",
+        "Downloads a YouTube video in either video or audio format and sends it.",
+        "This command accepts two arguments, *option*, and *url*.\n\n*option*, is what format you would like to download the video in, valid options are 'audio', 'video', or 'both'.\n\n*url*, is the url of the video you would like to download."
+    ]
+}
