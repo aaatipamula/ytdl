@@ -1,10 +1,9 @@
-from email.mime import base
 import yt_dlp
 import os
 import base64
 
 class Downloader():
-    def __init__(self, url, music_dir, video_dir):
+    def __init__(self, url: str, music_dir :str, video_dir :str):
         self.url = url
         self.music_dir = music_dir
         self.video_dir = video_dir
@@ -23,6 +22,7 @@ class Downloader():
         ydl_opts = {
             'format': 'bestaudio/best',
             'outtmpl': f'{self.base64_string}.%(ext)s',
+            'noplaylist':True,
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'mp3',
@@ -39,11 +39,11 @@ class Downloader():
         print(f"\nChanging directory to {os.getcwd()}...")
 
         ydl_opts = {
-            'outtmpl':'%(title)s.%(ext)s',
+            'outtmpl':f'{self.base64_string}.%(ext)s',
+            'noplaylist':True,
             'postprocessors': [{
                 'key':'FFmpegVideoConvertor',
-                'preferredformat':'mp4',
-                'perferredquality':'1080p'
+                'preferedformat':'mp4'
             }],
         }
 
@@ -54,7 +54,7 @@ class Downloader():
         self.music_download()
         self.video_download()
 
-    def switcher(self, selection):
+    def switcher(self, selection :str):
         key = {
         "1":"audio",
         "2":"video",

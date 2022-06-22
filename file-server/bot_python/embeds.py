@@ -7,30 +7,30 @@ os.chdir(__file__.strip('embeds.py'))
 commands = json.load(open('commands.json'))
 
 #embed on command error
-def cmd_error(value):
+def cmd_error(msg: str):
     a = discord.Embed(color=0xD40D08)
-    a.add_field(name= "Error!", value= value)
+    a.add_field(name= "Error!", value= msg)
     return a
 
 #title only embed
-def embed_a(title):
+def embed_a(title: str):
     a = discord.Embed(title= title, color=0xD40D08)
     return a
 
 #name and value only embed
-def embed_b(name, value):
+def embed_b(name: str, msg: str):
     a = discord.Embed(color=0xD40D08)
-    a.add_field(name= name, value= value)
+    a.add_field(name= name, value= msg)
     return a
 
 #title, name, and value embed
-def embed_c(title, name, value):
+def embed_c(title :str, name :str, msg :str):
     a = discord.Embed(title= title, color=0xD40D08)
-    a.add_field(name= name, value= value)
+    a.add_field(name= name, value= msg)
     return a
 
 #help command, scalable through the commands.json file
-def help_command(opt):
+def help_command(opt: str):
 
     opts = ["Help Has Arrived!", "At Your Service!", "HI!"]
 
@@ -39,7 +39,7 @@ def help_command(opt):
         cmdEmbed.add_field(name="About Me!", value="I am a bot that converts YT videos into mp3 and mp4 and gives it to you!\n\nBelow are some commands you can use with me. For any extra information on a command type the *help* command again along with the name of the command.")
         for x in commands:
             cmdEmbed.add_field(name=f"*{x}*", value="\u200b", inline=False)
-        cmdEmbed.set_footer(text= "Bot Command Prefix = '.'")
+        cmdEmbed.set_footer(text= "Bot Command Prefix = '!'")
         return cmdEmbed
 
     elif opt not in commands:
