@@ -1,6 +1,6 @@
-const express = require('express')
-const app = express()
-const audioRouter = require('./routes/audio')
+const express = require('express');
+const app = express();
+const audioRouter = require('./routes/audio');
 
 app.use('/audio', audioRouter)
 
