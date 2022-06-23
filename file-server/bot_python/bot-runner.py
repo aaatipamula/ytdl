@@ -1,14 +1,17 @@
 import discord
 from discord.ext import commands
-import json
 from downloader import Downloader
-import os
-import embeds
 from yt_dlp import DownloadError
+import os
+import json
+import embeds
 import base64
 import random
+import sqlite3
 
 bot = commands.Bot(command_prefix='!', case_insensitive=True, help_command=None)
+connection = sqlite3.connect('/home/aaatipamula/vscode_projects/yt-dlp-bot/file-server/database/db.sqlite')
+cursor = connection.cursor()
 
 os.chdir(__file__.split('bot-runner.py')[0])
 settings = json.load(open('settings.json'))
@@ -19,6 +22,22 @@ async def on_ready():
     bot_channel = bot.get_channel(914650069687492729)
     await bot_channel.send("I Am Ready")
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="In development!"))
+
+def dump_id(req_id :str, *content_ids :str):
+    connection = sqlite3.connect('/home/aaatipamula/vscode_projects/yt-dlp-bot/file-server/database/db.sqlite')
+    cursor = connection.cursor()
+    
+    a = cursor.execute("SELECT * FROM videoids WHERE videoids = %s" %req_id) 
+    b = [x[0] for x in a] 
+    
+    if req_id in b:
+        
+        req_id = base64.urlsafe_b64encode(str(random.choice(range(1, 999999))).encode('utf-8')).decode('utf-8')
+    
+    cursor.execute("INSERT INTO videoids (reqid, idone) VALUES (%s, %s)" %(req_id, content_ids(1)))
+    
+    connection.commit()
+    connection.close()
 
 @bot.command()
 async def download(ctx, opt :str, url :str):
@@ -43,7 +62,7 @@ async def download(ctx, opt :str, url :str):
     option = getattr(download, f"download_{opt}", ".")
     option()
     
-    #dump id and shit into database **MAKE A FUNCTION FOR THIS** 
+    dump_id(req_id, download.video_title_base64) 
     
     await ctx.send(embed=embeds.embed_b(f"{opt.capitalize()} is Here!", f'http://localhost:3000/audio/{req_id}\n\nSave the code below to access your video download for the next 24 hours!:\n\n*{req_id}*'))
 
