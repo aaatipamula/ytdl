@@ -1,7 +1,7 @@
 {
     "download":[
         "(*option*, *url*)",
-        "Downloads a YouTube video in either video or audio format and sends it. **VIDEO SUPPORT IS NOT YET AVAILIBLE, WORKING ON IT!!",
-        "This command accepts two arguments, *option*, and *url*.\n\n*option*, is what format you would like to download the video in, valid options are 'audio' or 'video'.\n\n*url*, is the url of the video you would like to download."
+        "Downloads a YouTube video in either webm or mp3 format and sends it. **VIDEO SUPPORT IS NOT YET AVAILIBLE, WORKING ON IT!!",
+        "This command accepts two arguments, *option*, and *url*.\n\n*option*, is what format you would like to download the video in, valid options are 'webm' or 'mp3'.\n\n*url*, is the url of the video you would like to download."
     ]
 }

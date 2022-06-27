@@ -1,10 +1,8 @@
 import discord
 import json
-import os
 import random
 
-os.chdir(__file__.strip('embeds.py'))
-commands = json.load(open('commands.json'))
+commands = json.load(open('./bot_python/commands.json'))
 
 #embed on command error
 def cmd_error(msg: str):
@@ -36,7 +34,8 @@ def help_command(opt: str):
 
     if opt == 'general':
         cmdEmbed = discord.Embed(title=random.choice(opts), color=0xD40D08)
-        cmdEmbed.add_field(name="About Me!", value="I am a bot that converts YT videos into mp3 and mp4 and gives it to you!\n\nBelow are some commands you can use with me. For any extra information on a command type the *help* command again along with the name of the command.")
+        cmdEmbed.add_field(name="About Me!", value="I am a bot that converts YT videos into mp3 and gives it to you!\n\nBelow are some commands you can use with me. For any extra information on a command type the *help* command again along with the name of the command.")
+
         for x in commands:
             cmdEmbed.add_field(name=f"*{x}*", value="\u200b", inline=False)
         cmdEmbed.set_footer(text= "Bot Command Prefix = '!'")

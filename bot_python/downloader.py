@@ -3,10 +3,10 @@ import os
 import base64
 
 class Downloader():
-    def __init__(self, url: str, music_dir :str, video_dir :str):
+    def __init__(self, url: str, mp3_dir :str, webm_dir :str):
         self.url = url
-        self.music_dir = music_dir
-        self.video_dir = video_dir
+        self.mp3_dir = mp3_dir
+        self.webm_dir = webm_dir
 
         with yt_dlp.YoutubeDL() as ydl:
             info = ydl.extract_info(url, download=False)
@@ -15,8 +15,8 @@ class Downloader():
         self.video_title_base64 = base64.urlsafe_b64encode(self.video_title.encode("utf-8"))
         self.base64_string = self.video_title_base64.decode('utf-8')
 
-    def download_audio(self):
-        os.chdir(self.music_dir)
+    def download_mp3(self):
+        os.chdir(self.webm_dir)
         print(f"\nChanging directory to {os.getcwd()}...")
 
         ydl_opts = {
@@ -34,22 +34,20 @@ class Downloader():
             ydl.download([self.url]) 
 
 
-    def download_video(self):
-        os.chdir(self.video_dir)
+    def download_webm(self):
+        os.chdir(self.webm_dir)
         print(f"\nChanging directory to {os.getcwd()}...")
 
         ydl_opts = {
+            'format': 'bestaudio/best',
             'outtmpl':f'{self.base64_string}.%(ext)s',
             'noplaylist':True,
-            'postprocessors': [{
-                'key':'FFmpegVideoConvertor',
-                'preferedformat':'mp4'
-            }],
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([self.url])
 
+    #Extraneous functions as a result of import from another project
     def download_both(self):
         self.music_download()
         self.video_download()
