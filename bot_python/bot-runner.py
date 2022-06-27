@@ -47,6 +47,7 @@ async def download(ctx, opt :str, url :str):
     
     if opt not in ['mp3', 'webm']:
         await ctx.send(embed=embeds.cmd_error("Please enter a valid option!"))
+        return
 
     elif "&list=" in url:
         url = url.split("&list=")[0]
@@ -69,6 +70,9 @@ async def download_error(ctx, error):
 
     if isinstance(error, DownloadError):
         await ctx.send(embeds.cmd_error("Please enter a valid YouTube URL."))
+
+    elif isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send(embed=embeds.cmd_error('Please enter what format you would like to download the video in!'))
 
 @bot.command()
 async def help(ctx, opt='general'):
