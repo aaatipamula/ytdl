@@ -43,7 +43,7 @@ async def download(ctx, opt :str, url :str):
     prev_id = fn.check_contentids(download.base64_string + f'${opt}')
     
     if prev_id is not None:
-        await ctx.send(embed=embeds.embed_b(f"Your Content is Here!", f'http://localhost:8000/{prev_id} \n\nThis link will be active for the next 24 hours!'))
+        await ctx.send(embed=embeds.embed_b(f"Your Content is Here!", f"{settings.get('website_name')}{prev_id} \n\nThis link will be active for the next 24 hours!"))
 
     else:
 
@@ -52,7 +52,7 @@ async def download(ctx, opt :str, url :str):
         
         req_id = fn.dump_id(download.base64_string + f"${opt}") 
         
-        await ctx.send(embed=embeds.embed_b(f"Your Content is Here!", f'http://localhost:8000/{req_id} \n\nThis link will be active for the next 24 hours!'))
+        await ctx.send(embed=embeds.embed_b(f"Your Content is Here!", f"{settings.get('website_name')}{req_id} \n\nThis link will be active for the next 24 hours!"))
 
 @download.error
 async def download_error(ctx, error):
