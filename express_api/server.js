@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const sqlite3 = require('sqlite3');
 const fs = require('fs');
-const { exit } = require('process');
+const { exit, execArgv } = require('process');
 
 app.get("/", (req, res) =>{
     res.send(403)
@@ -54,7 +54,7 @@ app.route("/:reqid").get(
                     res.sendStatus(404)
     
                 }else{
-                    res.download(`../downloads/${content_id[1]}/${content_id[0]}.${content_id[1]}`, `${Buffer.from(response.idone, 'base64').toString()}.webm`)
+                    res.download(`../downloads/${content_id[1]}/${content_id[0]}.${content_id[1]}`, `${Buffer.from(response.idone, 'base64').toString()}.${content_id[1]}`)
     
                 }
             });
