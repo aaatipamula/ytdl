@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from downloader import Downloader
 from yt_dlp import DownloadError
+import traceback as tb
 import json
 import embeds
 import functions as fn
@@ -9,7 +10,7 @@ from datetime import datetime as dt
 
 bot = commands.Bot(command_prefix='!', case_insensitive=True, help_command=None)
 
-settings = json.load(open('./bot_python/settings.json'))
+settings = json.load(open('./discord_bot/settings.json'))
 
 @bot.event
 async def on_ready():
@@ -60,10 +61,10 @@ async def download_error(ctx, error):
         await ctx.send(embeds.cmd_error("Please enter a valid YouTube URL."))
 
     elif isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send(embed=embeds.cmd_error('Please enter what format you would like to download the video in!'))
+        await ctx.send(embed=embeds.cmd_error('Please enter all required arguments, *format* and *url*'))
     
     else:
-        print(f'{error}\n{error.__traceback__}')
+        print(f"{error}\n{''.join(tb.format_exception(None, error, error.__traceback__))}")
 
 @bot.command()
 async def help(ctx, opt='general'):

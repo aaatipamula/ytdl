@@ -4,7 +4,7 @@ import json
 import os
 from tkinter import W
 
-settings = json.load(open('./bot_python/settings.json'))
+settings = json.load(open('./discord_bot/settings.json'))
 
 def tester(time :str):
     time_string = time
@@ -18,7 +18,7 @@ def tester(time :str):
     vals = [int(x) for x in vals]    
     
     def deleter():
-        connection = sqlite3.connect('/home/aaatipamula/vscode_projects/ytdl-bot/database/db.sqlite')
+        connection = sqlite3.connect(settings.get('db_source'))
         cursor = connection.cursor()
 
         a = cursor.execute(f"SELECT * FROM ids WHERE tim = \'{time_string}\'")
@@ -48,7 +48,7 @@ def tester(time :str):
     checker(vals, time_list)
 
 def main():        
-    connection = sqlite3.connect('/home/aaatipamula/vscode_projects/ytdl-bot/database/db.sqlite')
+    connection = sqlite3.connect(settings.get('db_source'))
     cursor = connection.cursor()
 
     vals = [x[2] for x in cursor.execute('SELECT * FROM ids')]

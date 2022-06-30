@@ -2,7 +2,7 @@ import discord
 import json
 import random
 
-commands = json.load(open('./bot_python/commands.json'))
+commands = json.load(open('./discord_bot/commands.json'))
 
 #embed on command error
 def cmd_error(msg: str):

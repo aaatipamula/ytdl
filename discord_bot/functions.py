@@ -4,38 +4,38 @@ import base64
 import random
 from datetime import datetime as dt
 
-settings = json.load(open('./bot_python/settings.json'))
+settings = json.load(open('./discord_bot/settings.json'))
 
-def query_select(query :str):
+def query_select(query :str, column :int):
 
     connection = sqlite3.connect(settings.get("db_source"))
     cursor = connection.cursor()
 
     a = cursor.execute(query)    
-    
+    b = [x[column] for x in a]
+
     connection.commit()
     connection.close()
 
-    return a
-
+    return b
 
 def query_insert(query :str, vals :tuple):
 
     connection = sqlite3.connect(settings.get("db_source"))
     cursor = connection.cursor()
 
-    a = cursor.execute(query, vals)    
+    cursor.execute(query, vals)    
     
     connection.commit()
     connection.close()
 
 def check_contentids(id :str):
 
-    a = [x[1] for x in query_select(f'SELECT * FROM ids WHERE idone = \'{id}\'')]
+    a = query_select(f'SELECT * FROM ids WHERE idone = \'{id}\'', 1)
     
     if id in a:
         
-        b = [x[0] for x in query_select(f'SELECT * FROM ids WHERE idone = \'{id}\'')]
+        b = query_select(f'SELECT * FROM ids WHERE idone = \'{id}\'', 0) 
         
         return b[0]
 
@@ -46,7 +46,7 @@ def dump_id(content_id :str):
 
     req_id = base64.urlsafe_b64encode(str(random.choice(range(1, 999999))).encode('utf-8')).decode('utf-8')
     
-    a = [x[0] for x in query_select(f"SELECT * FROM ids WHERE reqids = \'{req_id}\'")]
+    a = query_select(f"SELECT * FROM ids WHERE reqids = \'{req_id}\'", 0)
     
     if req_id in a:
         
