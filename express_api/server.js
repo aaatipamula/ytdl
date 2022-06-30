@@ -1,16 +1,16 @@
 const express = require('express');
-const router = express.Router()
+const app = express();
 const sqlite3 = require('sqlite3');
 const fs = require('fs');
 const { exit } = require('process');
 
-router.get("/", (req, res) =>{
+app.get("/", (req, res) =>{
     res.send(403)
 })
 
 const query = (req_id) => {
 
-    let db = new sqlite3.Database('./database/db.sqlite', sqlite3.OPEN_READONLY, (err) => {
+    let db = new sqlite3.Database('../database/db.sqlite', sqlite3.OPEN_READONLY, (err) => {
 
         if (err && err.code == "SQLITE_CANTOPEN") {
             console.log("Error: " + err)
@@ -30,16 +30,13 @@ const query = (req_id) => {
             } else {
                 resolve(row)
             }
-
         });
 
         db.close()
-    
     })
-
 }
 
-router.route("/:reqid").get(
+app.route("/:reqid").get(
     (req, res) => {
 
         let reqid = req.params.reqid
@@ -47,24 +44,26 @@ router.route("/:reqid").get(
         query(reqid)
 
         .then(response => {
+            
+            const content_id = response.idone.split('$')
 
-            fs.access(`./downloads/webm/${response.idone}.webm`, fs.constants.F_OK, (err) => {
+            fs.access(`../downloads/${content_id[1]}/${content_id[0]}.${content_id[1]}`, fs.constants.F_OK, (err) => {
 
                 if (err) {
                     console.log(err)
                     res.sendStatus(404)
     
                 }else{
-                    res.download(`./downloads/webm/${response.idone}.webm`, `${Buffer.from(response.idone, 'base64').toString()}.wemb`)
+                    res.download(`../downloads/${content_id[1]}/${content_id[0]}.${content_id[1]}`, `${Buffer.from(response.idone, 'base64').toString()}.webm`)
     
                 }
             });
         })
-
+    
         .catch(err => { console.log(err) })
-
-
     }
 )
 
-module.exports = router
+app.listen(8000, () => {
+    console.log('Application running...')
+});

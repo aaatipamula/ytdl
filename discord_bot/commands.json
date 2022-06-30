@@ -1,0 +1,7 @@
+{
+    "download":[
+        "(*option*, *url*)",
+        "Downloads a YouTube video in either webm or mp3 format and sends it.\n(Please note that mp3 downloads take slightly longer due to format conversion)",
+        "This command accepts two arguments, *option*, and *url*.\n\n*option*, is what format you would like to download the video in. Valid options are 'webm' or 'mp3'. While webm is slightly faster than mp3 as audio does not have to be converted.\n\n*url*, is the url of the video you would like to download."
+    ]
+}

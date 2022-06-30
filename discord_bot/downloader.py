@@ -16,7 +16,7 @@ class Downloader():
         self.base64_string = self.video_title_base64.decode('utf-8')
 
     def download_mp3(self):
-        os.chdir(self.webm_dir)
+        os.chdir(self.mp3_dir)
         print(f"\nChanging directory to {os.getcwd()}...")
 
         ydl_opts = {
