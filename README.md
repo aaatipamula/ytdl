@@ -8,7 +8,7 @@ Backend API, and Interface bot for Discord
 **Project Start Date**: , 2022 <br>
 **Contributors**: N/A <br> <br>
 
-**Project Origin**: This project originated as something to submit to my digital portfoliio for AP Computer Science Principles. I have continued to work on and add to the project as I have come up with improvements and increased my knowledge of python. <br> <br> 
+**Project Origin**: This project originated as a way to allow people to download YouTube videos without having to use a sketchy website. I combined that individual project with previous projects on Discord bots and this project was born.<br> <br> 
 
 **Project Description**: This project aims to provide a way for people to download the audio from YouTube videos. Through the use of the Discord API for Bots for client interfacing and express.js for serving up the files this project downloads audio and hosts it for 24 hours to serve up to the user.<br>
 
